@@ -1,0 +1,61 @@
+****************
+* Project 1 / warmup (GridMonitor)
+* CS 221-3
+* 1/24/2020
+* Trevor Smith
+**************** 
+
+OVERVIEW:
+
+ GridMonitor is a program that reads 2D arrays from files input by the GridMonitorTest, and then determines each cell to be true (meaning it will explode) or false (meaning it will not). GridMonitorTest confirms the functionality of GridMonitor and displays 'PASS' or 'FAIL' for each test. 
+
+
+INCLUDED FILES:
+
+ * GridMonitor.java - source file
+ * GridMonitorInterface.java - source file
+ * GridMonitorTest.java - source file
+ * wideRange.txt - text file used by GridMonitorTest.java
+ * negatives.txt - text file used by GridMonitorTest.java
+ * oneByOne.txt - text file used by GridMonitorTest.java
+ * sample.txt - text file used by GridMonitorTest.java
+ * sample4x5.txt - text file used by GridMonitorTest.java
+ * sampleDoubles.txt - text file used by GridMonitorTest.java
+ * README - this file
+
+
+COMPILING AND RUNNING:
+
+From the directory containing all source files, compile the test
+ class (and all dependent classes) with the command:
+ $ javac GridMonitorTest.java
+
+ Run the compiled GridMonitorTest class with the command:
+ $ java GridMonitorTest
+
+ Console output will report which tests GridMonitor passed or failed.
+
+
+PROGRAM DESIGN AND IMPORTANT CONCEPTS:
+
+ GridMonitor essentially reads and creates 2D arrays from a text file. GridMonitor will then create several arrays including grids that contain the sums and averages of each cells neighboring cells. GridMonitor then creates an array showing the boolean value of each cell which determines if the cell is going to explode. 
+
+GridMonitor first creates a base grid that looks identical to the array read from the input file. The program then creates the sum grid which consists of the sums of each cells neighboring cells (north, south, east, and west), using the cells own value if it is on a border. From there, GridMonitor creates an average grid which contains the average of each cells neighboring values. A delta grid is then created which contains the maximum delta values (50%) for each cell. Lastly, the danger grid is created which contains boolean values (true or false) which determines each cell's explosive risk. True means that the cell's original value was outside of the delta range and is at risk of exploding. False means that the cell's original value is inside of the delta range and is not at risk of exploding.
+
+ GridMonitorTest feeds files into GridMonitor and determines whether the GridMonitor has passed or failed each test. GridMonitorInterface is the interface for GridMonitor and defines the required methods for GridMonitor.
+ 
+ In GridMonitor, one improvement that could be made is possible condensing some of the code for the sumGrid. I used a series of if statements that looks clunky, but at the moment that was the only solution I could think of. 
+
+TESTING:
+
+ The GridMonitor has passed all tests from the GridMonitorTest program. GridMonitor can handle bad inputs and has no bugs to my knowledge.
+
+DISCUSSION:
+ 
+The first issue I had was getting started as that is always the toughest part for me, not knowing how to start. Once I got going, I created the code to make the base grid but the tester was saying my program failed the getBaseGrid test. It took me a while to figure out, but eventually I realized it was an issue with how I had my scanners set up as they weren't reading the input file correctly. The next struggle I had was figuring out how to make the sumGrid by adding the neighboring values of each cell. I eventually decided on a large assortment of if statements to determine each cell's value. From there, everything was smooth sailing until I got to the encapsulation test. I was failing the test for each grid after trying multiple methods--using the clone() method, using variable assignment, and making sure everything was private. After a while, I tried using a double for each loop to iterate through the original array and creating a copy and returning the copy. This ended up being the solution and being the last piece of the puzzle that I needed.
+ 
+ I wouldn't necessarily consider a specific part as challenging as it was all a slight challenge of its own. I did have a couple of 'aha' moments, where I fixed the issue with the getBaseGrid test and also when I finished the code for the sumGrid.
+
+
+----------------------------------------------------------------------------
+
