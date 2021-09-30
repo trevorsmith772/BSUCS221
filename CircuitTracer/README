@@ -1,0 +1,79 @@
+****************
+* Project 3/CircuitTracer
+* CS 221-3
+* 4/26/2020
+* Trevor Smith
+**************** 
+
+OVERVIEW:
+
+This program takes an input circuit board and uses a brute force search algorithm to search through all possible paths from the starting component to the ending component. CircuitTracer then outputs the most efficient paths to the console or through a GUI, depending on the user's choice.
+
+
+INCLUDED FILES:
+
+ * CircuitTracer.java - source file (driver class)
+ * CircuitBoard.java - source file (constructs the circuit board)
+ * CircuitTracerPanel.java - source file (GUI class for program)
+ * InvalidFileFormatException.java - source file
+ * OccupiedPositionException.java - source file
+ * Storage.java - source file
+ * TraceState.java - source file
+ * README - this file
+
+
+COMPILING AND RUNNING:
+
+ From the directory containing all source files, compile the
+ driver class (and all dependent classes) with the command:
+ $ java CircuitTracer.java
+ 
+ Run the compiled driver class with the command:
+ $ java CircuitTracer -q/-s -c/-g <filename>
+
+ Where the arguments are as follows:
+ -q (queue storage configuration) or -s (stack storage configuration)
+ -c (console output) or -g (GUI output)
+ <filename> full name of the input board file
+
+ Be sure that your input file is correctly formatted, with the file only containing integers, X's, O's, a 1, and a 2. An example input file can be seen below.
+
+5 6
+X O 1 O O O 
+X X X O O O 
+O O O O X O 
+O 2 O O X O 
+O X O O O O 
+
+ANALYSIS:
+
+When choosing whether to run this program with a stack or queue storage configuration, it's important to know the differences of the two and how they behave. With a stack configuration, it works as Last In First Out, meaning that the program will fully go through a path before moving onto the next possible path since the 'last in' was the most recently acquired state. With a queue, it works as First In First Out, meaning that the program will look at the next state for each current state, evenly going through each path almost simultaneously. With a stack, the ends of each path will be found at very different times, whereas with a queue all paths will be found relatively around the same time. It's important to know that the total number of states (possible paths) is the same for both stack and queue configurations. A big difference in the two, however, is that with a queue storage, more states will be noted at a time before getting to solutions because of the breadth-type search. With a stack, it will store mainly just the states required to get to a particular path before moving on to the next path. The overall Big-O runtime for this program is relatively low, at O(n), where n is the number of states in storage. This number is influenced by the storage type used as well as the number of positions on the input board. When comparing a queue vs stack storage configuration for this search algorithm, the stack configuration will typically find a solution before a queue would, but this solution may not be the most efficient. On the other hand, the first solution that a queue finds will be the shortest (or tied for shortest) path of all.
+
+PROGRAM DESIGN AND IMPORTANT CONCEPTS:
+ 
+This program consists of three main classes -- the constructor for the circuit board (CircuitBoard.java), the search algorithm class (CircuitTracer.java), and the class for the GUI (CircuitTracerPanel.java). The driver class (CircuitTracer.java) takes arguments from the command line, verifies them, creates a board using CircuitBoard.java, and then runs a brute force search algorithm to find solutions for the board. The additional classes (Storage.java, TraceState.java, InvalidFileFormatException.java, and OccupiedPosition.java) are all used by the CircuitTracer class.
+
+The search algorithm is the most complex portion of this program. The process for the search can essentially be broken down into three sections. The first section creates Trace States and stores them for each space on the board that is open and adjacent to the starting point (represented by a 1). Keep in mind that the storage used depends on what the user chooses (stack or queue), where a queue will perform a breadth search and a stack will perform a depth search. After the first section, the algorithm enters a loop that will continue until all states/paths have been explored. When a path is at the end point, the path will be stored in a list containing the best paths if it is shorter than the currently stored paths. If the state is not at the end, the search continues where each position that is open and adjacent to the current state will be stored, and then loops back to the beginning of the loop. 
+
+When writing the code for the CircuitBoard class, the main goal was to clearly go through each invalid input and create a clear order of how the board is checked. There may be a shorter way of implementing the code for the program, as the main goal was to make it easy to read. One improvement that can be made is the implementation of the load button in the GUI portion. The way this was implemented was to essentially close the current frame, rerun the CircuitTracer class, and then display the new frame. There is likely a better way to perform this action, but this is the best thing I could think of at the time.
+
+TESTING:
+
+To test this program, I used the CircuitTracerTester.java class to verify the functionality of my search algorithm. Along with this, I created a tester class for my CircuitBoard.java class to verify the functionality of it. With this CircuitBoardTester class, I simply printed the boards to the console along with whether or not each board is valid. Configuring the class to run with all input files on hand enabled me to see the results for every file.
+
+
+DISCUSSION:
+ 
+Starting out was the most difficult as it always is for me. Before coding, I went through the algorithm by hand to really understand how it works on pencil and paper. Once I did this, it was time to start on the constructor for the CircuitBoard class, where I first listed on paper everything I would need to check for to make sure I catch every invalid input/format of the file. Once I got this,  went through step by step and created the constructor which ended up being relatively simple.
+
+Moving on to the search algorithm, this had a few more challenges. I wrote the program initially with ease, but I had an issue. I initially wrote sections one and three using nested for loops instead of a series of if statements. Doing this created a nasty n^2 operation which wasn't a big issue for the first section, but for the third section it was going through this loop not only for every position of the board, but also for every state's board. This resulted in my program being hung up when getting to this stage. Every time I ran the program, it would run for minutes, causing my laptop fans to go on full power and slow my computer's performance to a crawl until finally a call stack overflow exception was thrown. I realized my mistake when using the debugger, where I finally saw what was taking so long in the algorithm. After finding the bug, I changed the nested for loops to if statements, as this is much more efficient. Before creating the search algorithm, I also spent some time looking through the given TraceState class, in order to see what methods were available so that I knew what tools I had on hand before I started coding.
+
+Moving on to the GUI portion of this program, this was relatively simple. While it did take some time to reteach myself GUI's, I was able to figure it out with Google searches and mainly looking at the given example GUI's as well as past GUI projects I have done. I had to do additional searches to figure out how to access the main args so I could use it in my LoadButtonListener. Overall, once I figured out how to work GUI's again, the process was pretty simple as I saw this as a relatively easy GUI to create. 
+ 
+EXTRA CREDIT:
+
+ In this project I attempted the extra credit portion which was the implementation of a fully functioning GUI for the program.
+
+
+----------------------------------------------------------------------------
+
