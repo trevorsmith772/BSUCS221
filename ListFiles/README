@@ -1,0 +1,66 @@
+****************
+* Project 2/DLL (DoubleLinkedList)
+* CS 221-3
+* April 17, 2020
+* Trevor Smith
+**************** 
+
+OVERVIEW:
+
+This program is double-linked node implementation of an Indexed Unsorted List which includes implementation of the ListIterator interface. 
+
+
+INCLUDED FILES:
+
+ e.g.
+ * ListTester.java - source file (driver class)
+ * IUDoubleLinkedList.java - source file (double-linked node implementation)
+ * IndexedUnsortedList.java - source file (interface)
+ * LinearNode.java - source file (supports IUDoubleLinkedList.java)
+ * IUSingleLinkedList.java - source file (required to compile)
+ * IUArrayList.java - source file (required to compile)
+ * GoodList.java - source file (required to compile)
+ * BadList.java - source file (required to compile)
+ * README - this file
+
+
+COMPILING AND RUNNING:
+
+From the directory containing all source files, compile the
+driver class (and all dependent classes) with the command:
+ $ javac ListTester.java
+
+Run the compiled driver class file with the command:
+ $ java ListTester
+
+Console output will give the results after the program finishes.
+Additional options for running the driver class include the following command line arguments:
+ *  -a : print results from all tests (default is to print failed tests, only)
+ *  -s : hide Strings from toString() tests
+ *  -m : hide section summaries in output
+
+To run the driver class with one of these arguments, simply add the argument to the end of the file name like so:
+ $ java ListTester -a
+
+
+PROGRAM DESIGN AND IMPORTANT CONCEPTS:
+
+
+This program consists of double-linked node implementation of an Indexed Unsorted list as well as a functional List Iterator. The double-linked node holds references for its corresponding element in the list as well as its previous and next node. On top of these node characteristics, the list also has two additional variable -- the head variable is a reference for the first node in a list and the tail is a reference for the last node in the list. These references help cut down the run time orders for the different methods used to operate the list. With the double-linked nodes is an implementation of a List Iterator which adds more functionality and efficiency for navigating and manipulating the list.
+
+This program consists of several classes. First, the IUDoubleLinkedList class implements the IndexedUnsortedList interface and is the class that contains all methods (aside from the List Iterator) that are to be used for list creation and manipulation. The DLLIterator class implements the List Iterator and holds all the methods for a list iterator that works with a double-linked list implementation. Both the IndexedUnsortedList and ListIterator interfaces play as a support role for the IUDoubleLinkedList and DLLIterator classes. Lastly, the ListTester class is responsible for testing the IUDoubleLinkedList and DLLIterator classes. The ListTester class creates scenarios which set up lists in different ways, then tests the lists with a series of unique tests for empty, single-element, double-element, and triple-element lists. 
+
+When designing the methods for the double-linked node implementation, the primary goal in most methods was to right easy-to-read code that breaks the method down into different scenarios that the program might run into. Because of this, there may be some code duplication as well as more efficient ways that the methods could be implemented. Some methods in IUDoubleLinkedList could be rewritten to use the DLLIterator to execute their tasks. More efficiency can be added to methods that require an index parameter by adding a condition check that calculates if the target index is closer to the head or tail of the list and then starts the search from the appropriate end. 
+
+TESTING:
+
+The ListTester class was used to test each method of the IUDoubleLinkedList class and the DLLIterator class. A total of 10,107 tests are run to determine the functionality of these two classes, including testing for empty, single-element, double-element, and triple-element lists. The IUDoubleLinkedList and DLLIterator passed all tests, therefore there are no known bugs in this program.
+
+
+DISCUSSION:
+ 
+Throughout development of this program, there were no particular immense struggles. Most issues were solved in relatively decent time. There was one bug with the DLLIterator remove method, with 2-element lists, that was caused the head and tail to hold onto the removed node when attempting to remove the tail of the list. This took a while to figure out because similar scenarios were passing, so I wasn't sure why the toString was printing [1,2] when it should be printing [1]. After spending a couple hours in the debugger, I traced the issue back to the remove method which I then completely rewrote. The same issue happened with the DLLIterator add method, which I also rewrote.
+
+While this program took many hours to complete, everything seemed to be well balanced with difficulty and there were no issues that had me stuck for more than a few hours. Whenever I approached a failing test, I first looked at whether the whole scenario was failing or just a specific test. If it were the whole scenario, it was safe to assume there was an issue with the method(s) that set up the scenario. Otherwise, it was likely the method being tested. If I was sure that the methods were correct but the test was still failing, I would then go to the test builder section of the ListTester class and determine whether the test was set up correctly.
+
+----------------------------------------------------------------------------
